@@ -1,3 +1,5 @@
+#por si no se tiene el data set se utiliza "pip install scikit-learn" en el cmd y se instala
+
 import numpy as np
 from sklearn.datasets import load_iris
 from sklearn.cluster import KMeans
@@ -28,13 +30,13 @@ iris = load_iris()
 X = iris.data
 
 # Parámetros para k-means
-num_clusters = 3
+num_clusters = 3 #ya que el data set cuenta con 3 etiquetas se busca utlizar ese numero para hacerlo lo más acertado posible
 es = 0.0001
 imax = 100
 
 # Usar el método FixedPoint para obtener el centroide inicial
 x0 = 1.0
-centroid_initialization, iterations, error = FixedPoint(x0, es, imax)
+centroid_initialization, iterations, error = FixedPoint(x0, es, imax) #por medio del punto fijo se obtine un valor inicial para el centroide del clustering
 print(f"Método de punto fijo: Solución aproximada: {centroid_initialization:.6f}")
 print(f"Se realizaron {iterations} iteraciones con un error del {error:.6f}%")
 
