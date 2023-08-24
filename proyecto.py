@@ -51,3 +51,49 @@ final_cluster_labels = kmeans.labels_
 
 print("Etiquetas de clúster finales:")
 print(final_cluster_labels)
+
+
+# Prueba con método de Newton Raphson
+tol = 0.0001
+
+def newton_raphson(x0, f, df, tol, max_iter):
+    x1 = x0
+    iter1 = 0
+    ea1 = 0
+    
+    while True:
+        xrold = x1
+        x1 = x1 - f(x1) / df(x1)
+        iter1 = iter1 + 1
+        
+        if x1 != 0:
+            ea1 = abs((x1 - xrold) / x1) * 100
+        
+        if ea1 < tol or iter1 >= max_iter:
+            break
+    
+    return x1, iter1, ea1
+
+# Definir la función f(x) y su derivada df(x) para el método de Newton-Raphson
+def f_newton(x):
+    return x ** 3 - x ** 2 - 1
+
+def df_newton(x):
+    return 3 * x ** 2 - 2 * x
+
+# Usar el método Newton-Raphson para obtener el centroide inicial
+centroid_initialization1, iterations1, error1 = newton_raphson(x0, f_newton, df_newton, tol, imax)
+print(f"Método de Newton-Raphson: Solución aproximada: {centroid_initialization1:.6f}")
+print(f"Se realizaron {iterations1} iteraciones con un error del {error1:.6f}%")
+
+# Inicializar todos los centroides con el valor obtenido de Newton-Raphson
+initial_centroids1 = np.full((num_clusters, X.shape[1]), centroid_initialization1)
+
+# Utilizar KMeans para realizar el clustering
+kmeans_1 = KMeans(n_clusters=num_clusters, init=initial_centroids1, n_init=1, max_iter=100)
+kmeans_1.fit(X)
+
+final_cluster_labels1 = kmeans_1.labels_
+
+print("Etiquetas de clúster finales:")
+print(final_cluster_labels1)
