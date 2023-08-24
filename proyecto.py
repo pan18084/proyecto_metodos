@@ -97,3 +97,29 @@ final_cluster_labels1 = kmeans_1.labels_
 
 print("Etiquetas de clúster finales:")
 print(final_cluster_labels1)
+
+
+# Graficos
+# Visualización de los resultados del clustering
+import matplotlib.pyplot as plt
+fig = plt.figure(figsize=(10, 7))
+
+# Scatter plot en 2D
+plt.subplot(1, 2, 1)
+plt.scatter(X[:, 0], X[:, 1], c=final_cluster_labels, cmap='viridis')
+plt.title('Visualización del Clustering en 2D')
+plt.xlabel('Característica 1')
+plt.ylabel('Característica 2')
+
+plt.tight_layout()
+plt.show()
+
+
+# Obtener el número de flores en cada clúster
+cluster_df = pd.DataFrame({'Flor': range(len(X)), 'Cluster': final_cluster_labels})
+cluster_counts = cluster_df['Cluster'].value_counts().sort_index()
+
+# Imprimir el conteo de flores en cada clúster
+print("\nNúmero de flores en cada clúster:")
+for cluster, count in cluster_counts.items():
+    print(f"Clúster {cluster}: {count} flores")
